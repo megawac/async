@@ -5,6 +5,7 @@ if (process.execArgv[0] !== "--expose-gc") {
 
 var async = require("../");
 global.gc();
+
 var startMem = process.memoryUsage().heapUsed;
 
 function waterfallTest(cb) {
@@ -42,5 +43,6 @@ function reportMemory() {
 }
 
 waterfallTest(function () {
-    setTimeout(reportMemory, 0);
+    global.gc();
+    setTimeout(reportMemory, 1000);
 });
