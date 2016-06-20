@@ -868,6 +868,7 @@
                         return;
                     }
                     running += 1;
+                    /* eslint {no-loop-func: 0} */
                     iteratee(elem.value, elem.key, onlyOnce(function (err) {
                         running -= 1;
                         if (err) {
@@ -3161,6 +3162,7 @@
      * pass an error to their callback. Results are always returned; however, if an
      * error occurs, no further `tasks` will be performed, and the results object
      * will only contain partial results. Invoked with (err, results).
+     * @returns undefined
      * @example
      *
      * async.auto({
@@ -3850,16 +3852,16 @@
     /**
      * A cargo of tasks for the worker function to complete. Cargo inherits all of
      * the same methods and event callbacks as {@link async.queue}.
-     * @typedef {Object} cargo
+     * @typedef {Object} CargoObject
      * @property {Function} length - A function returning the number of items
-     * waiting to be processed. Invoke with ().
+     * waiting to be processed. Invoke like `cargo.length()`.
      * @property {number} payload - An `integer` for determining how many tasks
      * should be process per round. This property can be changed after a `cargo` is
      * created to alter the payload on-the-fly.
      * @property {Function} push - Adds `task` to the `queue`. The callback is
      * called once the `worker` has finished processing the task. Instead of a
      * single task, an array of `tasks` can be submitted. The respective callback is
-     * used for every task in the list. Invoke with (task, [callback]).
+     * used for every task in the list. Invoke like `cargo.push(task, [callback])`.
      * @property {Function} saturated - A callback that is called when the
      * `queue.length()` hits the concurrency and further tasks will be queued.
      * @property {Function} empty - A callback that is called when the last item
@@ -3867,13 +3869,13 @@
      * @property {Function} drain - A callback that is called when the last item
      * from the `queue` has returned from the `worker`.
      * @property {Function} idle - a function returning false if there are items
-     * waiting or being processed, or true if not. Invoke with ().
+     * waiting or being processed, or true if not. Invoke like `cargo.idle()`.
      * @property {Function} pause - a function that pauses the processing of tasks
-     * until `resume()` is called. Invoke with ().
+     * until `resume()` is called. Invoke like `cargo.pause()`.
      * @property {Function} resume - a function that resumes the processing of
-     * queued tasks when the queue is paused. Invoke with ().
+     * queued tasks when the queue is paused. Invoke like `cargo.resume()`.
      * @property {Function} kill - a function that removes the `drain` callback and
-     * empties remaining tasks from the queue forcing it to go idle. Invoke with ().
+     * empties remaining tasks from the queue forcing it to go idle. Invoke like `cargo.kill()`.
      */
 
     /**
@@ -3895,11 +3897,11 @@
      * @category Control Flow
      * @param {Function} worker - An asynchronous function for processing an array
      * of queued tasks, which must call its `callback(err)` argument when finished,
-     * with an optional `err` argument. Invoked with (tasks, callback).
+     * with an optional `err` argument. Invoked with `(tasks, callback)`.
      * @param {number} [payload=Infinity] - An optional `integer` for determining
      * how many tasks should be processed per round; if omitted, the default is
      * unlimited.
-     * @returns {cargo} A cargo object to manage the tasks. Callbacks can
+     * @returns {CargoObject} A cargo object to manage the tasks. Callbacks can
      * attached as certain properties to listen for specific events during the
      * lifecycle of the cargo and inner queue.
      * @example
@@ -3948,8 +3950,8 @@
      * @param {Function} [callback] - A callback which is called when all
      * `iteratee` functions have finished, or an error occurs. Invoked with (err).
      */
-    function eachOfLimit(obj, limit, iteratee, cb) {
-      _eachOfLimit(limit)(obj, iteratee, cb);
+    function eachOfLimit(coll, limit, iteratee, callback) {
+      _eachOfLimit(limit)(coll, iteratee, callback);
     }
 
     /**
@@ -3986,7 +3988,8 @@
      * @name reduce
      * @static
      * @memberOf async
-     * @alias inject, foldl
+     * @alias inject
+     * @alias foldl
      * @category Collection
      * @param {Array|Object} coll - A collection to iterate over.
      * @param {*} memo - The initial state of the reduction.
@@ -4010,14 +4013,14 @@
      *     // result is now equal to the last value of memo, which is 6
      * });
      */
-    function reduce(arr, memo, iteratee, cb) {
-        eachOfSeries(arr, function (x, i, cb) {
+    function reduce(coll, memo, iteratee, callback) {
+        eachOfSeries(coll, function (x, i, callback) {
             iteratee(memo, x, function (err, v) {
                 memo = v;
-                cb(err);
+                callback(err);
             });
         }, function (err) {
-            cb(err, memo);
+            callback(err, memo);
         });
     }
 
@@ -4034,6 +4037,7 @@
      * @see async.compose
      * @category Control Flow
      * @param {...Function} functions - the asynchronous functions to compose
+     * @returns {Function} a function that composes the `functions` in order
      * @example
      *
      * // Requires lodash (or underscore), express3 and dresende's orm2.
@@ -4057,8 +4061,7 @@
      *     });
      * });
      */
-    function seq() /* functions... */{
-        var fns = arguments;
+    var seq = rest(function seq(functions) {
         return rest(function (args) {
             var that = this;
 
@@ -4069,7 +4072,7 @@
                 cb = noop;
             }
 
-            reduce(fns, args, function (newargs, fn, cb) {
+            reduce(functions, args, function (newargs, fn, cb) {
                 fn.apply(that, newargs.concat([rest(function (err, nextargs) {
                     cb(err, nextargs);
                 })]));
@@ -4077,7 +4080,7 @@
                 cb.apply(that, [err].concat(results));
             });
         });
-    }
+    });
 
     var reverse = Array.prototype.reverse;
 
@@ -4094,6 +4097,8 @@
      * @memberOf async
      * @category Control Flow
      * @param {...Function} functions - the asynchronous functions to compose
+     * @returns {Function} an asynchronous function that is the composed
+     * asynchronous `functions`
      * @example
      *
      * function add1(n, callback) {
@@ -4484,12 +4489,12 @@
      *     }
      * );
      */
-    function during(test, iteratee, cb) {
-        cb = cb || noop;
+    function during(test, fn, callback) {
+        callback = callback || noop;
 
         var next = rest(function (err, args) {
             if (err) {
-                cb(err);
+                callback(err);
             } else {
                 args.push(check);
                 test.apply(this, args);
@@ -4497,9 +4502,9 @@
         });
 
         var check = function (err, truth) {
-            if (err) return cb(err);
-            if (!truth) return cb(null);
-            iteratee(next);
+            if (err) return callback(err);
+            if (!truth) return callback(null);
+            fn(next);
         };
 
         test(check);
@@ -4525,13 +4530,13 @@
      * will be passed an error and any arguments passed to the final `fn`'s
      * callback. Invoked with (err, [results]);
      */
-    function doDuring(iteratee, test, cb) {
+    function doDuring(fn, test, callback) {
         var calls = 0;
 
         during(function (next) {
             if (calls++ < 1) return next(null, true);
             test.apply(this, arguments);
-        }, iteratee, cb);
+        }, fn, callback);
     }
 
     /**
@@ -4544,13 +4549,14 @@
      * @category Control Flow
      * @param {Function} test - synchronous truth test to perform before each
      * execution of `fn`. Invoked with ().
-     * @param {Function} fn - A function which is called each time `test` passes.
+     * @param {Function} iteratee - A function which is called each time `test` passes.
      * The function is passed a `callback(err)`, which must be called once it has
      * completed with an optional `err` argument. Invoked with (callback).
      * @param {Function} [callback] - A callback which is called after the test
      * function has failed and repeated execution of `fn` has stopped. `callback`
      * will be passed an error and any arguments passed to the final `fn`'s
      * callback. Invoked with (err, [results]);
+     * @returns undefined
      * @example
      *
      * var count = 0;
@@ -4567,13 +4573,13 @@
      *     }
      * );
      */
-    function whilst(test, iteratee, cb) {
-        cb = cb || noop;
-        if (!test()) return cb(null);
+    function whilst(test, iteratee, callback) {
+        callback = callback || noop;
+        if (!test()) return callback(null);
         var next = rest(function (err, args) {
-            if (err) return cb(err);
+            if (err) return callback(err);
             if (test.apply(this, args)) return iteratee(next);
-            cb.apply(null, [null].concat(args));
+            callback.apply(null, [null].concat(args));
         });
         iteratee(next);
     }
@@ -4600,11 +4606,11 @@
      * will be passed an error and any arguments passed to the final `fn`'s
      * callback. Invoked with (err, [results]);
      */
-    function doWhilst(iteratee, test, cb) {
+    function doWhilst(fn, test, callback) {
         var calls = 0;
-        return whilst(function () {
+        whilst(function () {
             return ++calls <= 1 || test.apply(this, arguments);
-        }, iteratee, cb);
+        }, fn, callback);
     }
 
     /**
@@ -4626,10 +4632,10 @@
      * will be passed an error and any arguments passed to the final `fn`'s
      * callback. Invoked with (err, [results]);
      */
-    function doUntil(iteratee, test, cb) {
-        return doWhilst(iteratee, function () {
+    function doUntil(fn, test, callback) {
+        doWhilst(fn, function () {
             return !test.apply(this, arguments);
-        }, cb);
+        }, callback);
     }
 
     function _withoutIndex(iteratee) {
@@ -4658,8 +4664,8 @@
      * @param {Function} [callback] - A callback which is called when all
      * `iteratee` functions have finished, or an error occurs. Invoked with (err).
      */
-    function eachLimit(arr, limit, iteratee, cb) {
-      return _eachOfLimit(limit)(arr, _withoutIndex(iteratee), cb);
+    function eachLimit(coll, limit, iteratee, callback) {
+      _eachOfLimit(limit)(coll, _withoutIndex(iteratee), callback);
     }
 
     /**
@@ -4986,8 +4992,8 @@
      *     }
      * );
      */
-    function forever(fn, cb) {
-        var done = onlyOnce(cb || noop);
+    function forever(fn, errback) {
+        var done = onlyOnce(errback || noop);
         var task = ensureAsync(fn);
 
         function next(err) {
@@ -5193,6 +5199,7 @@
      * @param {Function} hasher - An optional function for generating a custom hash
      * for storing results. It has all the arguments applied to it apart from the
      * callback, and must be synchronous.
+     * @returns {Function} a memoized version of `fn`
      * @example
      *
      * var slow_fn = function(name, callback) {
@@ -5313,8 +5320,8 @@
      * (or object) containing all the result arguments passed to the task callbacks.
      * Invoked with (err, results).
      */
-    function parallelLimit(tasks, limit, cb) {
-      return _parallel(_eachOfLimit(limit), tasks, cb);
+    function parallelLimit(tasks, limit, callback) {
+      _parallel(_eachOfLimit(limit), tasks, callback);
     }
 
     /**
@@ -5386,26 +5393,26 @@
 
     /**
      * A queue of tasks for the worker function to complete.
-     * @typedef {Object} queue
+     * @typedef {Object} QueueObject
      * @property {Function} length - a function returning the number of items
-     * waiting to be processed. Invoke with ().
+     * waiting to be processed. Invoke with `queue.length()`.
      * @property {Function} started - a function returning whether or not any
-     * items have been pushed and processed by the queue. Invoke with ().
+     * items have been pushed and processed by the queue. Invoke with `queue.started()`.
      * @property {Function} running - a function returning the number of items
-     * currently being processed. Invoke with ().
+     * currently being processed. Invoke with `queue.running()`.
      * @property {Function} workersList - a function returning the array of items
-     * currently being processed. Invoke with ().
+     * currently being processed. Invoke with `queue.workersList()`.
      * @property {Function} idle - a function returning false if there are items
-     * waiting or being processed, or true if not. Invoke with ().
+     * waiting or being processed, or true if not. Invoke with `queue.idle()`.
      * @property {number} concurrency - an integer for determining how many `worker`
      * functions should be run in parallel. This property can be changed after a
      * `queue` is created to alter the concurrency on-the-fly.
      * @property {Function} push - add a new task to the `queue`. Calls `callback`
      * once the `worker` has finished processing the task. Instead of a single task,
      * a `tasks` array can be submitted. The respective callback is used for every
-     * task in the list. Invoke with (task, [callback]),
+     * task in the list. Invoke with `queue.push(task, [callback])`,
      * @property {Function} unshift - add a new task to the front of the `queue`.
-     * Invoke with (task, [callback]).
+     * Invoke with `queue.unshift(task, [callback])`.
      * @property {Function} saturated - a callback that is called when the number of
      * running workers hits the `concurrency` limit, and further tasks will be
      * queued.
@@ -5423,11 +5430,11 @@
      * @property {boolean} paused - a boolean for determining whether the queue is
      * in a paused state.
      * @property {Function} pause - a function that pauses the processing of tasks
-     * until `resume()` is called. Invoke with ().
+     * until `resume()` is called. Invoke with `queue.pause()`.
      * @property {Function} resume - a function that resumes the processing of
-     * queued tasks when the queue is paused. Invoke with ().
+     * queued tasks when the queue is paused. Invoke with `queue.length()`.
      * @property {Function} kill - a function that removes the `drain` callback and
-     * empties remaining tasks from the queue forcing it to go idle. Invoke with ().
+     * empties remaining tasks from the queue forcing it to go idle. Invoke with `queue.kill()`.
      */
 
     /**
@@ -5448,7 +5455,7 @@
      * @param {number} [concurrency=1] - An `integer` for determining how many
      * `worker` functions should be run in parallel.  If omitted, the concurrency
      * defaults to `1`.  If the concurrency is `0`, an error is thrown.
-     * @returns {queue} A queue object to manage the tasks. Callbacks can
+     * @returns {QueueObject} A queue object to manage the tasks. Callbacks can
      * attached as certain properties to listen for specific events during the
      * lifecycle of the queue.
      * @example
@@ -5661,6 +5668,7 @@
      * @param {Function} callback - A callback to run once any of the functions have
      * completed. This function gets an error or result from the first function that
      * completed. Invoked with (err, result).
+     * @returns undefined
      * @example
      *
      * async.race([
@@ -5680,12 +5688,12 @@
      *     // the result will be equal to 'two' as it finishes earlier
      * });
      */
-    function race(tasks, cb) {
-        cb = once(cb || noop);
-        if (!isArray(tasks)) return cb(new TypeError('First argument to race must be an array of functions'));
-        if (!tasks.length) return cb();
+    function race(tasks, callback) {
+        callback = once(callback || noop);
+        if (!isArray(tasks)) return callback(new TypeError('First argument to race must be an array of functions'));
+        if (!tasks.length) return callback();
         forEach(tasks, function (task) {
-            task(cb);
+            task(callback);
         });
     }
 
@@ -5712,9 +5720,9 @@
      * `iteratee` functions have finished. Result is the reduced value. Invoked with
      * (err, result).
      */
-    function reduceRight(arr, memo, iteratee, cb) {
-      var reversed = slice.call(arr).reverse();
-      reduce(reversed, memo, iteratee, cb);
+    function reduceRight(coll, memo, iteratee, callback) {
+      var reversed = slice.call(coll).reverse();
+      reduce(reversed, memo, iteratee, callback);
     }
 
     /**
@@ -5727,7 +5735,7 @@
      * @static
      * @memberOf async
      * @category Util
-     * @param {Function} function - The function you want to wrap
+     * @param {Function} fn - The function you want to wrap
      * @returns {Function} - A function that always passes null to it's callback as
      * the error. The second argument to the callback will be an `object` with
      * either an `error` or a `value` property.
@@ -5960,8 +5968,8 @@
      *     // results is now equal to: {one: 1, two: 2}
      * });
      */
-    function series(tasks, cb) {
-      return _parallel(eachOfSeries, tasks, cb);
+    function series(tasks, callback) {
+      _parallel(eachOfSeries, tasks, callback);
     }
 
     /**
@@ -6058,11 +6066,11 @@
      *     // do something with the results
      * });
      */
-    function retry(times, task, callback) {
+    function retry(opts, task, callback) {
         var DEFAULT_TIMES = 5;
         var DEFAULT_INTERVAL = 0;
 
-        var opts = {
+        var options = {
             times: DEFAULT_TIMES,
             intervalFunc: constant$1(DEFAULT_INTERVAL)
         };
@@ -6079,11 +6087,11 @@
             }
         }
 
-        if (arguments.length < 3 && typeof times === 'function') {
+        if (arguments.length < 3 && typeof opts === 'function') {
             callback = task || noop;
-            task = times;
+            task = opts;
         } else {
-            parseTimes(opts, times);
+            parseTimes(options, opts);
             callback = callback || noop;
         }
 
@@ -6092,10 +6100,10 @@
         }
 
         var attempts = [];
-        for (var i = 1; i < opts.times + 1; i++) {
-            var isFinalAttempt = i == opts.times;
+        for (var i = 1; i < options.times + 1; i++) {
+            var isFinalAttempt = i == options.times;
             attempts.push(retryAttempt(isFinalAttempt));
-            var interval = opts.intervalFunc(i);
+            var interval = options.intervalFunc(i);
             if (!isFinalAttempt && interval > 0) {
                 attempts.push(retryInterval(interval));
             }
@@ -6282,15 +6290,15 @@
      *     // result callback
      * });
      */
-    function sortBy(arr, iteratee, cb) {
-        map(arr, function (x, cb) {
+    function sortBy(coll, iteratee, callback) {
+        map(coll, function (x, callback) {
             iteratee(x, function (err, criteria) {
-                if (err) return cb(err);
-                cb(null, { value: x, criteria: criteria });
+                if (err) return callback(err);
+                callback(null, { value: x, criteria: criteria });
             });
         }, function (err, results) {
-            if (err) return cb(err);
-            cb(null, arrayMap(results.sort(comparator), baseProperty('value')));
+            if (err) return callback(err);
+            callback(null, arrayMap(results.sort(comparator), baseProperty('value')));
         });
 
         function comparator(left, right) {
@@ -6302,16 +6310,16 @@
 
     /**
      * Sets a time limit on an asynchronous function. If the function does not call
-     * its callback within the specified miliseconds, it will be called with a
+     * its callback within the specified milliseconds, it will be called with a
      * timeout error. The code property for the error object will be `'ETIMEDOUT'`.
      *
      * @name timeout
      * @static
      * @memberOf async
      * @category Util
-     * @param {Function} function - The asynchronous function you want to set the
+     * @param {Function} asyncFn - The asynchronous function you want to set the
      * time limit.
-     * @param {number} miliseconds - The specified time limit.
+     * @param {number} milliseconds - The specified time limit.
      * @param {*} [info] - Any variable you want attached (`string`, `object`, etc)
      * to timeout Error for more information..
      * @returns {Function} Returns a wrapped function that can be used with any of
@@ -6322,7 +6330,7 @@
      *     doAsyncTask(callback);
      * }, 1000);
      */
-    function timeout(asyncFn, miliseconds, info) {
+    function timeout(asyncFn, milliseconds, info) {
         var originalCallback, timer;
         var timedOut = false;
 
@@ -6347,7 +6355,7 @@
         return initialParams(function (args, origCallback) {
             originalCallback = origCallback;
             // setup timer and call original function
-            timer = setTimeout(timeoutCallback, miliseconds);
+            timer = setTimeout(timeoutCallback, milliseconds);
             asyncFn.apply(null, args.concat(injectedCallback));
         });
     }
@@ -6387,14 +6395,14 @@
      * @memberOf async
      * @see async.times
      * @category Control Flow
-     * @param {number} n - The number of times to run the function.
+     * @param {number} count - The number of times to run the function.
      * @param {number} limit - The maximum number of async operations at a time.
      * @param {Function} iteratee - The function to call `n` times. Invoked with the
      * iteration index and a callback (n, next).
      * @param {Function} callback - see {@link async.map}.
      */
-    function timeLimit(count, limit, iteratee, cb) {
-      return mapLimit(baseRange(0, count, 1), limit, iteratee, cb);
+    function timeLimit(count, limit, iteratee, callback) {
+      mapLimit(baseRange(0, count, 1), limit, iteratee, callback);
     }
 
     /**
@@ -6489,17 +6497,17 @@
      *     // result is equal to {a: 2, b: 4, c: 6}
      * })
      */
-    function transform(arr, acc, iteratee, callback) {
+    function transform(coll, accumulator, iteratee, callback) {
         if (arguments.length === 3) {
             callback = iteratee;
-            iteratee = acc;
-            acc = isArray(arr) ? [] : {};
+            iteratee = accumulator;
+            accumulator = isArray(coll) ? [] : {};
         }
 
-        eachOf(arr, function (v, k, cb) {
-            iteratee(acc, v, k, cb);
+        eachOf(coll, function (v, k, cb) {
+            iteratee(accumulator, v, k, cb);
         }, function (err) {
-            callback(err, acc);
+            callback(err, accumulator);
         });
     }
 
@@ -6513,6 +6521,7 @@
      * @see async.memoize
      * @category Util
      * @param {Function} fn - the memoized function
+     * @returns {Function} a function that calls the original unmemoized function
      */
     function unmemoize(fn) {
         return function () {
@@ -6542,10 +6551,10 @@
      * will be passed an error and any arguments passed to the final `fn`'s
      * callback. Invoked with (err, [results]);
      */
-    function until(test, iteratee, cb) {
-        return whilst(function () {
+    function until(test, fn, callback) {
+        whilst(function () {
             return !test.apply(this, arguments);
-        }, iteratee, cb);
+        }, fn, callback);
     }
 
     /**
@@ -6565,6 +6574,7 @@
      * @param {Function} [callback] - An optional callback to run once all the
      * functions have completed. This will be passed the results of the last task's
      * callback. Invoked with (err, [results]).
+     * @returns undefined
      * @example
      *
      * async.waterfall([
@@ -6603,20 +6613,20 @@
      *     callback(null, 'done');
      * }
      */
-    function waterfall (tasks, cb) {
-        cb = once(cb || noop);
-        if (!isArray(tasks)) return cb(new Error('First argument to waterfall must be an array of functions'));
-        if (!tasks.length) return cb();
+    function waterfall (tasks, callback) {
+        callback = once(callback || noop);
+        if (!isArray(tasks)) return callback(new Error('First argument to waterfall must be an array of functions'));
+        if (!tasks.length) return callback();
         var taskIndex = 0;
 
         function nextTask(args) {
             if (taskIndex === tasks.length) {
-                return cb.apply(null, [null].concat(args));
+                return callback.apply(null, [null].concat(args));
             }
 
             var taskCallback = onlyOnce(rest(function (err, args) {
                 if (err) {
-                    return cb.apply(null, [err].concat(args));
+                    return callback.apply(null, [err].concat(args));
                 }
                 nextTask(args);
             }));
