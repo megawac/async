@@ -1,70 +1,39 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>Documentation Index</title>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
 
-	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
-
-	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
-
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
 </head>
-
 <body>
 
-<div class="navbar navbar-default navbar-fixed-top ">
-<div class="container">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html">Documentation</a>
-		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-        </button>
-	</div>
-	<div class="navbar-collapse collapse" id="topNavigation">
-		<ul class="nav navbar-nav">
-			
-			<li class="dropdown">
-				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="module-async.html">async</a></li>
-				</ul>
-			</li>
-			
-		</ul>
-		<div class="col-sm-3 col-md-3">
-            <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
-                    </div>
-                </div>
-            </form>
-        </div>
-	</div>
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
 
-</div>
-</div>
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-async.html">async</a><ul class='methods'><li data-type='method'><a href="module-async.html#.apply">apply</a></li><li data-type='method'><a href="module-async.html#.applyEach">applyEach</a></li><li data-type='method'><a href="module-async.html#.applyEachSeries">applyEachSeries</a></li><li data-type='method'><a href="module-async.html#.asyncify">asyncify</a></li><li data-type='method'><a href="module-async.html#.auto">auto</a></li><li data-type='method'><a href="module-async.html#.autoInject">autoInject</a></li><li data-type='method'><a href="module-async.html#.cargo">cargo</a></li><li data-type='method'><a href="module-async.html#.compose">compose</a></li><li data-type='method'><a href="module-async.html#.concat">concat</a></li><li data-type='method'><a href="module-async.html#.concatSeries">concatSeries</a></li><li data-type='method'><a href="module-async.html#.constant">constant</a></li><li data-type='method'><a href="module-async.html#.detect">detect</a></li><li data-type='method'><a href="module-async.html#.detectLimit">detectLimit</a></li><li data-type='method'><a href="module-async.html#.detectSeries">detectSeries</a></li><li data-type='method'><a href="module-async.html#.doDuring">doDuring</a></li><li data-type='method'><a href="module-async.html#.doUntil">doUntil</a></li><li data-type='method'><a href="module-async.html#.doWhilst">doWhilst</a></li><li data-type='method'><a href="module-async.html#.during">during</a></li><li data-type='method'><a href="module-async.html#.each">each</a></li><li data-type='method'><a href="module-async.html#.eachLimit">eachLimit</a></li><li data-type='method'><a href="module-async.html#.eachOf">eachOf</a></li><li data-type='method'><a href="module-async.html#.eachOfLimit">eachOfLimit</a></li><li data-type='method'><a href="module-async.html#.eachOfSeries">eachOfSeries</a></li><li data-type='method'><a href="module-async.html#.eachSeries">eachSeries</a></li><li data-type='method'><a href="module-async.html#.ensureAsync">ensureAsync</a></li><li data-type='method'><a href="module-async.html#.every">every</a></li><li data-type='method'><a href="module-async.html#.everyLimit">everyLimit</a></li><li data-type='method'><a href="module-async.html#.everySeries">everySeries</a></li><li data-type='method'><a href="module-async.html#.filter">filter</a></li><li data-type='method'><a href="module-async.html#.filterLimit">filterLimit</a></li><li data-type='method'><a href="module-async.html#.filterSeries">filterSeries</a></li><li data-type='method'><a href="module-async.html#.forever">forever</a></li><li data-type='method'><a href="module-async.html#.iterator">iterator</a></li><li data-type='method'><a href="module-async.html#.log">log</a></li><li data-type='method'><a href="module-async.html#.log">log</a></li><li data-type='method'><a href="module-async.html#.map">map</a></li><li data-type='method'><a href="module-async.html#.mapLimit">mapLimit</a></li><li data-type='method'><a href="module-async.html#.mapSeries">mapSeries</a></li><li data-type='method'><a href="module-async.html#.mapValues">mapValues</a></li><li data-type='method'><a href="module-async.html#.mapValuesLimit">mapValuesLimit</a></li><li data-type='method'><a href="module-async.html#.mapValuesSeries">mapValuesSeries</a></li><li data-type='method'><a href="module-async.html#.memoize">memoize</a></li><li data-type='method'><a href="module-async.html#.nextTick">nextTick</a></li><li data-type='method'><a href="module-async.html#.parallel">parallel</a></li><li data-type='method'><a href="module-async.html#.parallel">parallel</a></li><li data-type='method'><a href="module-async.html#.priorityQueue">priorityQueue</a></li><li data-type='method'><a href="module-async.html#.queue">queue</a></li><li data-type='method'><a href="module-async.html#.race">race</a></li><li data-type='method'><a href="module-async.html#.reduce">reduce</a></li><li data-type='method'><a href="module-async.html#.reduceRight">reduceRight</a></li><li data-type='method'><a href="module-async.html#.reflect">reflect</a></li><li data-type='method'><a href="module-async.html#.reflectAll">reflectAll</a></li><li data-type='method'><a href="module-async.html#.reject">reject</a></li><li data-type='method'><a href="module-async.html#.rejectLimit">rejectLimit</a></li><li data-type='method'><a href="module-async.html#.rejectSeries">rejectSeries</a></li><li data-type='method'><a href="module-async.html#.retry">retry</a></li><li data-type='method'><a href="module-async.html#.retryable">retryable</a></li><li data-type='method'><a href="module-async.html#.seq">seq</a></li><li data-type='method'><a href="module-async.html#.series">series</a></li><li data-type='method'><a href="module-async.html#.setImmediate">setImmediate</a></li><li data-type='method'><a href="module-async.html#.some">some</a></li><li data-type='method'><a href="module-async.html#.someLimit">someLimit</a></li><li data-type='method'><a href="module-async.html#.someSeries">someSeries</a></li><li data-type='method'><a href="module-async.html#.sortBy">sortBy</a></li><li data-type='method'><a href="module-async.html#.timeout">timeout</a></li><li data-type='method'><a href="module-async.html#.times">times</a></li><li data-type='method'><a href="module-async.html#.timesLimit">timesLimit</a></li><li data-type='method'><a href="module-async.html#.timesSeries">timesSeries</a></li><li data-type='method'><a href="module-async.html#.transform">transform</a></li><li data-type='method'><a href="module-async.html#.unmemoize">unmemoize</a></li><li data-type='method'><a href="module-async.html#.until">until</a></li><li data-type='method'><a href="module-async.html#.waterfall">waterfall</a></li><li data-type='method'><a href="module-async.html#.whilst">whilst</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
 
 
-<div class="container" id="toc-content">
-<div class="row">
 
-	
-	<div class="col-md-8">
-	
-		<div id="main">
-			
-
-	
-	
+    
 
 
 
@@ -74,16 +43,10 @@
 
 
 
+    
 
 
-	
-	
-
-
-
-
-
-    <section class="readme-section">
+    <section class="readme">
         <article><h1>Async.js</h1><p><a href="https://travis-ci.org/caolan/async"><img src="https://travis-ci.org/caolan/async.svg?branch=master" alt="Build Status via Travis CI"></a>
 <a href="https://www.npmjs.com/package/async"><img src="https://img.shields.io/npm/v/async.svg" alt="NPM version"></a>
 <a href="https://coveralls.io/r/caolan/async?branch=master"><img src="https://coveralls.io/repos/caolan/async/badge.svg?branch=master" alt="Coverage Status"></a>
@@ -220,128 +183,15 @@ import async from 'async-es';</code></pre></article>
 
 
 
-
-		</div>
-	</div>
-
-	<div class="clearfix"></div>
-
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
-	
-
-</div>
 </div>
 
-<div class="modal fade" id="searchResults">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Search results</h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div>
+<br class="clear">
 
 <footer>
-
-
-<span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
-	
-		on 2016-06-20T05:11:38-04:00
-	
-	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
-</span>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Jun 20 2016 22:10:59 GMT-0400 (EDT) using the Minami theme.
 </footer>
 
-<script src="scripts/docstrap.lib.js"></script>
-<script src="scripts/toc.js"></script>
-<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
-
-<script>
-$( function () {
-	$( "[id*='$']" ).each( function () {
-		var $this = $( this );
-
-		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
-	} );
-
-	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
-		var $this = $( this );
-
-		var example = $this.find( "code" );
-		exampleText = example.html();
-		var lang = /{@lang (.*?)}/.exec( exampleText );
-		if ( lang && lang[1] ) {
-			exampleText = exampleText.replace( lang[0], "" );
-			example.html( exampleText );
-			lang = lang[1];
-		} else {
-			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
-			lang = langClassMatch ? langClassMatch[1] : "javascript";
-		}
-
-		if ( lang ) {
-
-			$this
-			.addClass( "sunlight-highlight-" + lang )
-			.addClass( "linenums" )
-			.html( example.html() );
-
-		}
-	} );
-
-	Sunlight.highlightAll( {
-		lineNumbers : false,
-		showMenu : true,
-		enableDoclinks : true
-	} );
-
-	$.catchAnchorLinks( {
-        navbarOffset: 10
-	} );
-	$( "#toc" ).toc( {
-		anchorName  : function ( i, heading, prefix ) {
-			var id = $( heading ).attr( "id" );
-			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
-		},
-		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
-		showAndHide : false,
-		smoothScrolling: true
-	} );
-
-	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
-	$( '.dropdown-toggle' ).dropdown();
-
-    $( "table" ).each( function () {
-      var $this = $( this );
-      $this.addClass('table');
-    } );
-
-} );
-</script>
-
-
-
-<!--Navigation and Symbol Display-->
-
-
-<!--Google Analytics-->
-
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		SearcherDisplay.init();
-	});
-</script>
-
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
 </body>
 </html>

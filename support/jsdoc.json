@@ -1,16 +1,21 @@
 {
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc"]
+  },
   "source": {
     "include": [ "./lib" ]
   },
   "plugins": ["plugins/markdown"],
   "opts": {
     "readme": "README.md",
-    "template": "node_modules/ink-docstrap/template",
+    "template": "node_modules/minami",
     "encoding": "utf8",
     "destination": "./docs",
     "recurse": true
   },
   "templates": {
-     "theme": "cerulean"
+    "cleverLinks": false,
+    "theme": "cerulean"
   }
 }
