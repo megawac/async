@@ -27,6 +27,7 @@ var additionalFooterText = ' Documentation has been modified from the original. 
 fs.copySync(asyncFile, path.join(docsDir, 'scripts/async.js'), { clobber: 'true'});
 
 function generateHTMLFile(filename, $page, callback) {
+    // generate an HTML file from a cheerio object
     var HTMLdata = HTMLFileBegin + $page.find('head').html()
         + HTMLFileHeadBodyJoin + $page.find('body').html()
         + HTMLFileEnd;
@@ -47,6 +48,9 @@ function combineFakeModules(files, callback) {
         if (err) return callback(err);
 
         var $mainPage = $(mainModuleData);
+        // each 'module' (category) has a separate page, with all of the
+        // important information in a 'main' div. Combine all of these divs into
+        // one on the actual module page (async) 
         async.eachSeries(moduleFiles, function(file, fileCallback) {
             fs.readFile(path.join(docsDir, file), 'utf8', function(err, moduleData) {
                 if (err) return fileCallback(err);
@@ -76,9 +80,15 @@ function applyPreCheerioFixes(data) {
 
     var rIncorrectModuleText = />module:(\w+)\.(\w+)</g
 
+    // the heading needs additional padding at the top so it doesn't get cutoff
     return data.replace(closingHeadTag, fixedPageTitleStyle+closingHeadTag)
+        // inject the async library onto each page
         .replace(closingBodyTag, asyncScript+closingBodyTag)
+        // for JSDoc to work, the module needs to be labelled 'ControlFlow', while
+        // on the page it should appear as 'Control Flow'
         .replace(rIncorrectCFText, fixedCFText)
+        // for return types, JSDoc doesn't allow replacing the link text, so it
+        // needs to be done here
         .replace(rIncorrectModuleText, function(match, moduleName, methodName) {
             return '>'+methodName+'<';
         });
@@ -88,14 +98,17 @@ function fixToc($page, moduleFiles) {
     // remove `async` listing from toc
     $page.find('li').find('a[href="'+mainModuleFile+'"]').parent().remove();
 
-    // change page title
+    // change toc title
     $page.find('nav').children('h3').text(pageTitle);
 
+    // make everything point to the same 'docs.html' page
     _.each(moduleFiles, function(filename) {
         $page.find('[href^="'+filename+'"]').each(function() {
             var $ele = $(this);
             var href = $ele.attr('href');
 
+            // category titles should sections title, while everything else
+            // points to the correct listing
             if (href === filename) {
                 var moduleName = $ele.text().toLowerCase().replace(/\s/g, '');
                 $ele.attr('href', docFilename+'#'+moduleName);
@@ -107,6 +120,7 @@ function fixToc($page, moduleFiles) {
 }
 
 function fixFooter($page) {
+    // add a note to the footer that the documentation has been modified
     var $footer = $page.find('footer');
     var text = $footer.text();
     $footer.append(additionalFooterText);
