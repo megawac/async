@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8">
     <title>cargo.js - Documentation</title>
 
@@ -12,10 +13,12 @@
     <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-</head>
+<style>
+.page-title { padding-top: 12px; }
+</style></head>
 <body>
 
-<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<input type="checkbox" id="nav-trigger" class="nav-trigger">
 <label for="nav-trigger" class="navicon-button x">
   <div class="navicon"></div>
 </label>
@@ -23,7 +26,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-async.html">async</a><ul class='methods'><li data-type='method'><a href="module-async.html#.apply">apply</a></li><li data-type='method'><a href="module-async.html#.applyEach">applyEach</a></li><li data-type='method'><a href="module-async.html#.applyEachSeries">applyEachSeries</a></li><li data-type='method'><a href="module-async.html#.asyncify">asyncify</a></li><li data-type='method'><a href="module-async.html#.auto">auto</a></li><li data-type='method'><a href="module-async.html#.autoInject">autoInject</a></li><li data-type='method'><a href="module-async.html#.cargo">cargo</a></li><li data-type='method'><a href="module-async.html#.compose">compose</a></li><li data-type='method'><a href="module-async.html#.concat">concat</a></li><li data-type='method'><a href="module-async.html#.concatSeries">concatSeries</a></li><li data-type='method'><a href="module-async.html#.constant">constant</a></li><li data-type='method'><a href="module-async.html#.detect">detect</a></li><li data-type='method'><a href="module-async.html#.detectLimit">detectLimit</a></li><li data-type='method'><a href="module-async.html#.detectSeries">detectSeries</a></li><li data-type='method'><a href="module-async.html#.doDuring">doDuring</a></li><li data-type='method'><a href="module-async.html#.doUntil">doUntil</a></li><li data-type='method'><a href="module-async.html#.doWhilst">doWhilst</a></li><li data-type='method'><a href="module-async.html#.during">during</a></li><li data-type='method'><a href="module-async.html#.each">each</a></li><li data-type='method'><a href="module-async.html#.eachLimit">eachLimit</a></li><li data-type='method'><a href="module-async.html#.eachOf">eachOf</a></li><li data-type='method'><a href="module-async.html#.eachOfLimit">eachOfLimit</a></li><li data-type='method'><a href="module-async.html#.eachOfSeries">eachOfSeries</a></li><li data-type='method'><a href="module-async.html#.eachSeries">eachSeries</a></li><li data-type='method'><a href="module-async.html#.ensureAsync">ensureAsync</a></li><li data-type='method'><a href="module-async.html#.every">every</a></li><li data-type='method'><a href="module-async.html#.everyLimit">everyLimit</a></li><li data-type='method'><a href="module-async.html#.everySeries">everySeries</a></li><li data-type='method'><a href="module-async.html#.filter">filter</a></li><li data-type='method'><a href="module-async.html#.filterLimit">filterLimit</a></li><li data-type='method'><a href="module-async.html#.filterSeries">filterSeries</a></li><li data-type='method'><a href="module-async.html#.forever">forever</a></li><li data-type='method'><a href="module-async.html#.iterator">iterator</a></li><li data-type='method'><a href="module-async.html#.log">log</a></li><li data-type='method'><a href="module-async.html#.log">log</a></li><li data-type='method'><a href="module-async.html#.map">map</a></li><li data-type='method'><a href="module-async.html#.mapLimit">mapLimit</a></li><li data-type='method'><a href="module-async.html#.mapSeries">mapSeries</a></li><li data-type='method'><a href="module-async.html#.mapValues">mapValues</a></li><li data-type='method'><a href="module-async.html#.mapValuesLimit">mapValuesLimit</a></li><li data-type='method'><a href="module-async.html#.mapValuesSeries">mapValuesSeries</a></li><li data-type='method'><a href="module-async.html#.memoize">memoize</a></li><li data-type='method'><a href="module-async.html#.nextTick">nextTick</a></li><li data-type='method'><a href="module-async.html#.parallel">parallel</a></li><li data-type='method'><a href="module-async.html#.parallel">parallel</a></li><li data-type='method'><a href="module-async.html#.priorityQueue">priorityQueue</a></li><li data-type='method'><a href="module-async.html#.queue">queue</a></li><li data-type='method'><a href="module-async.html#.race">race</a></li><li data-type='method'><a href="module-async.html#.reduce">reduce</a></li><li data-type='method'><a href="module-async.html#.reduceRight">reduceRight</a></li><li data-type='method'><a href="module-async.html#.reflect">reflect</a></li><li data-type='method'><a href="module-async.html#.reflectAll">reflectAll</a></li><li data-type='method'><a href="module-async.html#.reject">reject</a></li><li data-type='method'><a href="module-async.html#.rejectLimit">rejectLimit</a></li><li data-type='method'><a href="module-async.html#.rejectSeries">rejectSeries</a></li><li data-type='method'><a href="module-async.html#.retry">retry</a></li><li data-type='method'><a href="module-async.html#.retryable">retryable</a></li><li data-type='method'><a href="module-async.html#.seq">seq</a></li><li data-type='method'><a href="module-async.html#.series">series</a></li><li data-type='method'><a href="module-async.html#.setImmediate">setImmediate</a></li><li data-type='method'><a href="module-async.html#.some">some</a></li><li data-type='method'><a href="module-async.html#.someLimit">someLimit</a></li><li data-type='method'><a href="module-async.html#.someSeries">someSeries</a></li><li data-type='method'><a href="module-async.html#.sortBy">sortBy</a></li><li data-type='method'><a href="module-async.html#.timeout">timeout</a></li><li data-type='method'><a href="module-async.html#.times">times</a></li><li data-type='method'><a href="module-async.html#.timesLimit">timesLimit</a></li><li data-type='method'><a href="module-async.html#.timesSeries">timesSeries</a></li><li data-type='method'><a href="module-async.html#.transform">transform</a></li><li data-type='method'><a href="module-async.html#.unmemoize">unmemoize</a></li><li data-type='method'><a href="module-async.html#.until">until</a></li><li data-type='method'><a href="module-async.html#.waterfall">waterfall</a></li><li data-type='method'><a href="module-async.html#.whilst">whilst</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>ASYNC</h3><ul><li><a href="docs.html#collections">Collections</a><ul class="methods"><li data-type="method"><a href="docs.html#.concat">concat</a></li><li data-type="method"><a href="docs.html#.concatSeries">concatSeries</a></li><li data-type="method"><a href="docs.html#.detect">detect</a></li><li data-type="method"><a href="docs.html#.detectLimit">detectLimit</a></li><li data-type="method"><a href="docs.html#.detectSeries">detectSeries</a></li><li data-type="method"><a href="docs.html#.each">each</a></li><li data-type="method"><a href="docs.html#.eachLimit">eachLimit</a></li><li data-type="method"><a href="docs.html#.eachOf">eachOf</a></li><li data-type="method"><a href="docs.html#.eachOfLimit">eachOfLimit</a></li><li data-type="method"><a href="docs.html#.eachOfSeries">eachOfSeries</a></li><li data-type="method"><a href="docs.html#.eachSeries">eachSeries</a></li><li data-type="method"><a href="docs.html#.every">every</a></li><li data-type="method"><a href="docs.html#.everyLimit">everyLimit</a></li><li data-type="method"><a href="docs.html#.everySeries">everySeries</a></li><li data-type="method"><a href="docs.html#.filter">filter</a></li><li data-type="method"><a href="docs.html#.filterLimit">filterLimit</a></li><li data-type="method"><a href="docs.html#.filterSeries">filterSeries</a></li><li data-type="method"><a href="docs.html#.map">map</a></li><li data-type="method"><a href="docs.html#.mapLimit">mapLimit</a></li><li data-type="method"><a href="docs.html#.mapSeries">mapSeries</a></li><li data-type="method"><a href="docs.html#.mapValues">mapValues</a></li><li data-type="method"><a href="docs.html#.mapValuesLimit">mapValuesLimit</a></li><li data-type="method"><a href="docs.html#.mapValuesSeries">mapValuesSeries</a></li><li data-type="method"><a href="docs.html#.reduce">reduce</a></li><li data-type="method"><a href="docs.html#.reduceRight">reduceRight</a></li><li data-type="method"><a href="docs.html#.reject">reject</a></li><li data-type="method"><a href="docs.html#.rejectLimit">rejectLimit</a></li><li data-type="method"><a href="docs.html#.rejectSeries">rejectSeries</a></li><li data-type="method"><a href="docs.html#.some">some</a></li><li data-type="method"><a href="docs.html#.someLimit">someLimit</a></li><li data-type="method"><a href="docs.html#.someSeries">someSeries</a></li><li data-type="method"><a href="docs.html#.sortBy">sortBy</a></li><li data-type="method"><a href="docs.html#.transform">transform</a></li></ul></li><li><a href="docs.html#controlflow">Control Flow</a><ul class="methods"><li data-type="method"><a href="docs.html#.applyEach">applyEach</a></li><li data-type="method"><a href="docs.html#.applyEachSeries">applyEachSeries</a></li><li data-type="method"><a href="docs.html#.auto">auto</a></li><li data-type="method"><a href="docs.html#.autoInject">autoInject</a></li><li data-type="method"><a href="docs.html#.cargo">cargo</a></li><li data-type="method"><a href="docs.html#.compose">compose</a></li><li data-type="method"><a href="docs.html#.doDuring">doDuring</a></li><li data-type="method"><a href="docs.html#.doUntil">doUntil</a></li><li data-type="method"><a href="docs.html#.doWhilst">doWhilst</a></li><li data-type="method"><a href="docs.html#.during">during</a></li><li data-type="method"><a href="docs.html#.forever">forever</a></li><li data-type="method"><a href="docs.html#.iterator">iterator</a></li><li data-type="method"><a href="docs.html#.parallel">parallel</a></li><li data-type="method"><a href="docs.html#.parallelLimit">parallelLimit</a></li><li data-type="method"><a href="docs.html#.priorityQueue">priorityQueue</a></li><li data-type="method"><a href="docs.html#.queue">queue</a></li><li data-type="method"><a href="docs.html#.race">race</a></li><li data-type="method"><a href="docs.html#.retry">retry</a></li><li data-type="method"><a href="docs.html#.retryable">retryable</a></li><li data-type="method"><a href="docs.html#.seq">seq</a></li><li data-type="method"><a href="docs.html#.series">series</a></li><li data-type="method"><a href="docs.html#.times">times</a></li><li data-type="method"><a href="docs.html#.timesLimit">timesLimit</a></li><li data-type="method"><a href="docs.html#.timesSeries">timesSeries</a></li><li data-type="method"><a href="docs.html#.until">until</a></li><li data-type="method"><a href="docs.html#.waterfall">waterfall</a></li><li data-type="method"><a href="docs.html#.whilst">whilst</a></li></ul></li><li><a href="docs.html#utils">Utils</a><ul class="methods"><li data-type="method"><a href="docs.html#.apply">apply</a></li><li data-type="method"><a href="docs.html#.asyncify">asyncify</a></li><li data-type="method"><a href="docs.html#.constant">constant</a></li><li data-type="method"><a href="docs.html#.dir">dir</a></li><li data-type="method"><a href="docs.html#.ensureAsync">ensureAsync</a></li><li data-type="method"><a href="docs.html#.log">log</a></li><li data-type="method"><a href="docs.html#.memoize">memoize</a></li><li data-type="method"><a href="docs.html#.nextTick">nextTick</a></li><li data-type="method"><a href="docs.html#.reflect">reflect</a></li><li data-type="method"><a href="docs.html#.reflectAll">reflectAll</a></li><li data-type="method"><a href="docs.html#.setImmediate">setImmediate</a></li><li data-type="method"><a href="docs.html#.timeout">timeout</a></li><li data-type="method"><a href="docs.html#.unmemoize">unmemoize</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -38,13 +41,13 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import queue from './internal/queue';
+            <pre class="prettyprint source linenums"><code>import queue from &apos;./internal/queue&apos;;
 
 /**
  * A cargo of tasks for the worker function to complete. Cargo inherits all of
- * the same methods and event callbacks as {@link async.queue}.
+ * the same methods and event callbacks as [`queue`]{@link module:ControlFlow.queue}.
  * @typedef {Object} CargoObject
- * @memberOf module:async
+ * @memberOf module:ControlFlow
  * @property {Function} length - A function returning the number of items
  * waiting to be processed. Invoke like `cargo.length()`.
  * @property {number} payload - An `integer` for determining how many tasks
@@ -71,6 +74,9 @@
  */
 
 /**
+ * ```
+ * import cargo from &apos;async/cargo&apos;
+ * ```
  * Creates a `cargo` object with the specified payload. Tasks added to the
  * cargo will be processed altogether (up to the `payload` limit). If the
  * `worker` is in progress, the task is queued until it becomes available. Once
@@ -78,15 +84,15 @@
  * called. Check out [these](https://camo.githubusercontent.com/6bbd36f4cf5b35a0f11a96dcd2e97711ffc2fb37/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f313637363837312f36383130382f62626330636662302d356632392d313165322d393734662d3333393763363464633835382e676966) [animations](https://camo.githubusercontent.com/f4810e00e1c5f5f8addbe3e9f49064fd5d102699/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f313637363837312f36383130312f38346339323036362d356632392d313165322d383134662d3964336430323431336266642e676966)
  * for how `cargo` and `queue` work.
  *
- * While [queue](#queue) passes only one task to one of a group of workers
+ * While [`queue`]{@link module:ControlFlow.queue} passes only one task to one of a group of workers
  * at a time, cargo passes an array of tasks to a single worker, repeating
  * when the worker is finished.
  *
  * @name cargo
  * @static
- * @memberOf module:async
+ * @memberOf module:ControlFlow
  * @method
- * @see [async.queue]{@link module:async.queue}
+ * @see [async.queue]{@link module:ControlFlow.queue}
  * @category Control Flow
  * @param {Function} worker - An asynchronous function for processing an array
  * of queued tasks, which must call its `callback(err)` argument when finished,
@@ -94,7 +100,7 @@
  * @param {number} [payload=Infinity] - An optional `integer` for determining
  * how many tasks should be processed per round; if omitted, the default is
  * unlimited.
- * @returns {module:async.CargoObject} A cargo object to manage the tasks. Callbacks can
+ * @returns {module:ControlFlow.CargoObject} A cargo object to manage the tasks. Callbacks can
  * attached as certain properties to listen for specific events during the
  * lifecycle of the cargo and inner queue.
  * @example
@@ -102,20 +108,20 @@
  * // create a cargo object with payload 2
  * var cargo = async.cargo(function(tasks, callback) {
  *     for (var i=0; i&lt;tasks.length; i++) {
- *         console.log('hello ' + tasks[i].name);
+ *         console.log(&apos;hello &apos; + tasks[i].name);
  *     }
  *     callback();
  * }, 2);
  *
  * // add some items
- * cargo.push({name: 'foo'}, function(err) {
- *     console.log('finished processing foo');
+ * cargo.push({name: &apos;foo&apos;}, function(err) {
+ *     console.log(&apos;finished processing foo&apos;);
  * });
- * cargo.push({name: 'bar'}, function(err) {
- *     console.log('finished processing bar');
+ * cargo.push({name: &apos;bar&apos;}, function(err) {
+ *     console.log(&apos;finished processing bar&apos;);
  * });
- * cargo.push({name: 'baz'}, function(err) {
- *     console.log('finished processing baz');
+ * cargo.push({name: &apos;baz&apos;}, function(err) {
+ *     console.log(&apos;finished processing baz&apos;);
  * });
  */
 export default function cargo(worker, payload) {
@@ -133,10 +139,9 @@ export default function cargo(worker, payload) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Jun 20 2016 22:10:59 GMT-0400 (EDT) using the Minami theme.
-</footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jun 21 2016 05:03:25 GMT-0400 (EDT) using the Minami theme.
+ Documentation has been modified from the original.  For more information, please see the <a href="https://github.com/caolan/async">async</a> repository.</footer>
 
 <script>prettyPrint();</script>
 <script src="scripts/linenumber.js"></script>
-</body>
-</html>
+<script src="scripts/async.js"></script></body>
