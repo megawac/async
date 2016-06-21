@@ -65,10 +65,10 @@ function combineFakeModules(files, callback) {
 }
 
 function applyPreCheerioFixes(data) {
-    var fixedPageTitleStyle = '<style>\n'+sectionTitleClass+' { padding-top: '+pageTitlePadding+'; }\n</style>'
+    var fixedPageTitleStyle = '<style>\n'+sectionTitleClass+' { padding-top: '+pageTitlePadding+'; }\n</style>\n'
     var closingHeadTag = '</head>'
 
-    var asyncScript = '<script src="scripts/async.js"></script>';
+    var asyncScript = '<script src="scripts/async.js"></script>\n';
     var closingBodyTag = '</body>';
 
     var rIncorrectCFText = />ControlFlow</g;
